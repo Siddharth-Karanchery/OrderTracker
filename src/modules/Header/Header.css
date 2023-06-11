@@ -1,0 +1,15 @@
+.Header {
+  width: 100%;
+  background-color: var(--backgroundLight);
+  display: flex;
+  flex-direction: column;
+}
+.Header__Web {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.Header__MenuIcon {
+  padding: 1rem;
+}

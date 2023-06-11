@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+:root {
+  --primaryDark: #8c1c13;
+  --primaryLight: #bf4342;
+  --secondaryDark: #735751;
+  --secondaryLight: #a78a7f;
+  --textDark: #423a38;
+  /* --textLight: #e7d7c1; */
+  --textLight: #fefefe;
+  --background: #e7d7c1;
+  --backgroundLight: #f9f7f3;
+}
+
+.OrderTracker {
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  color: var(--textDark);
+  background-color: var(--background);
+  min-width: 100vw;
+  min-height: 100vh;
+}
+.OrderTracker__Page {
+  min-height: 92vh;
+}
