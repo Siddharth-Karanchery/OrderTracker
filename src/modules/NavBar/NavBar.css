@@ -1,0 +1,12 @@
+.Navbar {
+  width: 100%;
+  background-color: var(--primaryLight);
+  color: var(--textLight);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.Navbar__Tab {
+  margin: 0 1rem;
+}
