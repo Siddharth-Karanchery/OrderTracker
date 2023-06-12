@@ -1,0 +1,36 @@
+.AddOrder {
+  margin: 0 auto;
+  margin-top: 5rem;
+  padding: 2rem;
+  width: 50%;
+  background-color: var(--backgroundLight);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.AddOrder__Row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.AddOrder__Col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* margin: 1rem 0; */
+}
+.AddOrder__Row__Ele {
+  margin: 1rem;
+}
+.AddOrder__AddItem {
+  color: var(--primaryDark);
+  border-color: var(--primaryDark);
+  margin-top: 1rem;
+}
+
+.mY {
+  margin: 0.5rem 0;
+}

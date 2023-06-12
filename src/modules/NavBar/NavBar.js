@@ -14,7 +14,7 @@ function NavBar() {
           <Typography
             className="Navbar__Tab"
             variant="subtitle1"
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", margin: "0 1rem" }}
             onClick={() => {
               navigate({
                 pathname: tab.path,

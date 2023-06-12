@@ -1,5 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 :root {
   --primaryDark: #8c1c13;
   --primaryLight: #bf4342;
@@ -22,4 +34,5 @@
 }
 .OrderTracker__Page {
   min-height: 92vh;
+  min-width: 100vw;
 }

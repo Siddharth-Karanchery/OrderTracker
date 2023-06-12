@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
+import AddOrder from "./modules/AddOrder/AddORder";
 
 function OrderTracker() {
   const [showMenu, setShowMenu] = React.useState(false);
@@ -25,6 +26,7 @@ function OrderTracker() {
         <Header isNotMobile={isNotMobile} onMenuSelect={onMenuSelect} />
         <Container className="OrderTracker__Page">
           <Routes>
+            <Route exact path="/AddOrder" element={<AddOrder />} />
             <Route exact path="/" element={<Home />} />
           </Routes>
         </Container>

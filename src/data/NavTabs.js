@@ -4,8 +4,8 @@ export const NavTabs = [
     path: "/",
   },
   {
-    tabName: "Tab 1",
-    path: "/Tab1",
+    tabName: "Add Order",
+    path: "/AddOrder",
   },
   {
     tabName: "Tab 2",
