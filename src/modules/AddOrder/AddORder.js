@@ -12,6 +12,8 @@ import AddIcon from "@mui/icons-material/Add";
 
 import "./AddOrder.css";
 import React from "react";
+import { useNavigate, createSearchParams } from "react-router-dom";
+
 function AddOrder() {
   const [orderItems, setOrderItems] = React.useState([
     {
@@ -20,8 +22,13 @@ function AddOrder() {
       rating: "",
     },
   ]);
+  const [hotelName, setHotelName] = React.useState("");
+  const [branch, setBranch] = React.useState("");
+  const [amount, setAmount] = React.useState("");
+  const [date, setDate] = React.useState("");
+  const [rating, setRating] = React.useState("");
 
-  console.log("orderItems: ", orderItems);
+  const navigate = useNavigate();
 
   const addItemHandler = () => {
     let temp = orderItems.slice();
@@ -31,36 +38,91 @@ function AddOrder() {
       rating: "",
     });
     setOrderItems(temp);
-    console.log("orderItems: ", orderItems);
+  };
+
+  const resetForm = () => {
+    setOrderItems([
+      {
+        id: 0,
+        dishname: "",
+        rating: "",
+      },
+    ]);
+    setHotelName("");
+    setBranch("");
+    setAmount("");
+    setDate("");
+    setRating("");
+  };
+
+  const cancelHandler = () => {
+    navigate("/");
+  };
+  const submitHandler = () => {
+    let orderDetails = {};
+    orderDetails.HotelName = hotelName;
+    orderDetails.Branch = branch;
+    orderDetails.Date = date;
+    orderDetails.Amount = amount;
+    orderDetails.Rating = rating;
+    orderDetails.Order = orderItems;
+    console.log("orderDetails: ", orderDetails);
+    resetForm();
+  };
+
+  const dishNameHandler = (id, e) => {
+    let temp = orderItems.slice();
+    const selectedIndex = orderItems.findIndex((obj) => obj.id === id);
+    let selectedOrder = orderItems[selectedIndex];
+    selectedOrder.dishname = e.target.value;
+    temp[selectedIndex] = selectedOrder;
+  };
+
+  const ratingHandler = (id, e) => {
+    let temp = orderItems.slice();
+    const selectedIndex = orderItems.findIndex((obj) => obj.id === id);
+    let selectedOrder = orderItems[selectedIndex];
+    selectedOrder.rating = e.target.value;
+    temp[selectedIndex] = selectedOrder;
   };
 
   return (
     <Box className="AddOrder">
       <Box className="AddOrder__Row">
-        <TextField label="Hotel Name" defaultValue="" />
+        <TextField
+          label="Hotel Name"
+          onChange={(e) => setHotelName(e.target.value)}
+          value={hotelName}
+        />
         <TextField
           className="AddOrder__Row__Ele"
           sx={{ margin: "0 1rem" }}
           label="Branch"
-          defaultValue=""
+          onChange={(e) => setBranch(e.target.value)}
+          value={branch}
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker label="Order Date" onChange={(e) => console.log(e.$d)} />
+          <DatePicker
+            label="Order Date"
+            onChange={(e) => setDate(e.$d)}
+            value={date}
+          />
         </LocalizationProvider>
         <TextField
           className="AddOrder__Row__Ele"
           sx={{ margin: "0 1rem" }}
           label="Bill Amount"
-          defaultValue=""
+          onChange={(e) => setAmount(e.target.value)}
           InputProps={{
             startAdornment: <InputAdornment position="start">₹</InputAdornment>,
           }}
+          value={amount}
         />
         <TextField
-          //   className="AddOrder__Row__Ele"
           sx={{ margin: "0 1rem" }}
           label="Rating"
-          defaultValue=""
+          onChange={(e) => setRating(e.target.value)}
+          value={rating}
         />
       </Box>
       <Typography variant="h5">Items</Typography>
@@ -69,13 +131,15 @@ function AddOrder() {
           <Box className="AddOrder__Row mY" id={item.id}>
             <TextField
               label="Dish Name"
-              defaultValue=""
+              value={item.dishname}
               sx={{ marginLeft: "1rem" }}
+              onChange={(e) => dishNameHandler(item.id, e)}
             />
             <TextField
               label="Rating"
-              defaultValue=""
+              value={item.rating}
               sx={{ marginLeft: "1rem" }}
+              onChange={(e) => ratingHandler(item.id, e)}
             />
           </Box>
         ))}
@@ -93,7 +157,7 @@ function AddOrder() {
         <Button
           variant="outlined"
           className="AddOrder__AddItem"
-          //   onClick={addItemHandler}
+          onClick={cancelHandler}
           sx={{ color: "#a78a7f", borderColor: "#a78a7f", marginTop: "1rem" }}
         >
           Cancel
@@ -101,7 +165,7 @@ function AddOrder() {
         <Button
           variant="outlined"
           className="AddOrder__AddItem"
-          //   onClick={addItemHandler}
+          onClick={submitHandler}
           sx={{
             color: "#8c1c13",
             borderColor: "#8c1c13",
