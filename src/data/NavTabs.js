@@ -8,7 +8,7 @@ export const NavTabs = [
     path: "/AddOrder",
   },
   {
-    tabName: "Tab 2",
-    path: "/Tab2",
+    tabName: "Insights",
+    path: "/insights",
   },
 ];
