@@ -29,10 +29,10 @@ input[type="number"] {
   text-align: center;
   color: var(--textDark);
   background-color: var(--background);
-  min-width: 100vw;
+  min-width: 99vw;
   min-height: 100vh;
 }
 .OrderTracker__Page {
   min-height: 92vh;
-  min-width: 100vw;
+  min-width: 99vw;
 }

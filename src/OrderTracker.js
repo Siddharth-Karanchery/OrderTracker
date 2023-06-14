@@ -4,7 +4,7 @@ import Footer from "./modules/Footer/Footer";
 import Header from "./modules/Header/Header";
 import Home from "./modules/Home/Home";
 
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -22,19 +22,19 @@ function OrderTracker() {
   };
 
   return (
-    <div className="OrderTracker">
+    <Box className="OrderTracker">
       <BrowserRouter>
         <Header isNotMobile={isNotMobile} onMenuSelect={onMenuSelect} />
-        <Container className="OrderTracker__Page">
+        <Box className="OrderTracker__Page">
           <Routes>
             <Route exact path="/AddOrder" element={<AddOrder />} />
             <Route exact path="/" element={<Home />} />
             <Route exact path="/insights" element={<Insights />} />
           </Routes>
-        </Container>
+        </Box>
         <Footer />
       </BrowserRouter>
-    </div>
+    </Box>
   );
 }
 
