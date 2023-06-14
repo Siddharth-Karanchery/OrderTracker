@@ -11,6 +11,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
 import AddOrder from "./modules/AddOrder/AddORder";
 import Insights from "./modules/Insights/Insights";
+import Login from "./modules/Login/Login";
 
 function OrderTracker() {
   const [showMenu, setShowMenu] = React.useState(false);
@@ -30,6 +31,7 @@ function OrderTracker() {
             <Route exact path="/AddOrder" element={<AddOrder />} />
             <Route exact path="/" element={<Home />} />
             <Route exact path="/insights" element={<Insights />} />
+            <Route exact path="/login" element={<Login />} />
           </Routes>
         </Box>
         <Footer />
