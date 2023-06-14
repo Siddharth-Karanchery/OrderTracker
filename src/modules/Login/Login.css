@@ -1,0 +1,6 @@
+.Login {
+  width: 100%;
+  background-color: var(--backgroundLight);
+  display: flex;
+  flex-direction: row;
+}
