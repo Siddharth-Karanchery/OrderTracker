@@ -27,7 +27,12 @@ function OrderTracker() {
   return (
     <Box className="OrderTracker">
       <BrowserRouter>
-        <Header isNotMobile={isNotMobile} onMenuSelect={onMenuSelect} />
+        <Header
+          isNotMobile={isNotMobile}
+          onMenuSelect={onMenuSelect}
+          userDetails={userDetails}
+          setUserDetails={setUserDetails}
+        />
         <Box className="OrderTracker__Page">
           <Routes>
             <Route

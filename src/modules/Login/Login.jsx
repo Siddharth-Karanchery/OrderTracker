@@ -11,6 +11,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme } from "@mui/material/styles";
+import FormHelperText from "@mui/material/FormHelperText";
+import { red } from "@mui/material/colors";
 
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -34,48 +36,52 @@ const app = initializeApp({
 const auth = getAuth(app);
 
 export default function SignIn(props) {
+  const [loginError, setLoginError] = React.useState({});
+
   let navigate = useNavigate();
+
+  const CustomHelperText = (props) => {
+    return (
+      <FormHelperText sx={{ color: red[600] }}>
+        {props.helperText}
+      </FormHelperText>
+    );
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
     signInWithEmailAndPassword(auth, data.get("email"), data.get("password"))
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         props.setUserDetails(user);
-        console.log("user: ", user);
-        // setLoginError({
-        //   state: false,
-        // });
         navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
 
-        // if (errorCode === "auth/wrong-password") {
-        //   setLoginError({
-        //     state: true,
-        //     errorCode: errorCode,
-        //     errorMessage: "Invalid Password!",
-        //   });
-        // } else if (errorCode === "auth/user-not-found") {
-        //   setLoginError({
-        //     state: true.valueOf,
-        //     errorCode: errorCode,
-        //     errorMessage: "User not found!",
-        //   });
-        // }
+        if (errorCode === "auth/wrong-password") {
+          setLoginError({
+            state: true,
+            errorCode: errorCode,
+            errorMessage: "Invalid Password!",
+          });
+        } else if (errorCode === "auth/user-not-found") {
+          setLoginError({
+            state: true.valueOf,
+            errorCode: errorCode,
+            errorMessage: "User not found!",
+          });
+        }
       });
   };
 
   return (
     <Container className="Login" component="main" maxWidth="xs">
       <CssBaseline />
+
       <Box
         className="Login"
         sx={{
@@ -112,6 +118,11 @@ export default function SignIn(props) {
             id="password"
             autoComplete="current-password"
           />
+          {loginError.state ? (
+            <CustomHelperText helperText={loginError.errorMessage} />
+          ) : (
+            ""
+          )}
           <Button
             type="submit"
             fullWidth
@@ -133,16 +144,3 @@ export default function SignIn(props) {
     </Container>
   );
 }
-// import { Box, Container, Typography } from "@mui/material";
-// import "./Login.css";
-// function Login() {
-//   return (
-//     <Box className="Login">
-//       <Container>
-//         <Typography variant="subtitle1">Login</Typography>
-//       </Container>
-//     </Box>
-//   );
-// }
-
-// export default Login;
