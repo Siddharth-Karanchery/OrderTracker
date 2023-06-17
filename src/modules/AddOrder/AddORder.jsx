@@ -14,6 +14,7 @@ import "./AddOrder.css";
 import React from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { foodCategories } from "../../data/foodCategory";
+import { ratingData } from "../../data/DropDownData";
 
 function AddOrder() {
   const [orderItems, setOrderItems] = React.useState([
@@ -93,11 +94,11 @@ function AddOrder() {
     temp[selectedIndex] = selectedOrder;
   };
 
-  const ratingHandler = (id, e) => {
+  const ratingHandler = (id, rating) => {
     let temp = orderItems.slice();
     const selectedIndex = orderItems.findIndex((obj) => obj.id === id);
     let selectedOrder = orderItems[selectedIndex];
-    selectedOrder.rating = e.target.value;
+    selectedOrder.rating = rating;
     temp[selectedIndex] = selectedOrder;
   };
 
@@ -121,8 +122,6 @@ function AddOrder() {
           sx={{ mr: "1rem", minWidth: "10rem" }}
           select
           label="Category"
-
-          // helperText="Please select your currency"
         >
           {foodCategories.map((category) => (
             <MenuItem
@@ -151,12 +150,28 @@ function AddOrder() {
           }}
           value={amount}
         />
-        <TextField
+        {/* <TextField
           sx={{ margin: "0 1rem" }}
           label="Rating"
           onChange={(e) => setRating(e.target.value)}
           value={rating}
-        />
+        /> */}
+        <TextField
+          className="AddOrder__Row__Ele"
+          sx={{ ml: "1rem", minWidth: "10rem" }}
+          select
+          label="Rating"
+        >
+          {ratingData.map((item) => (
+            <MenuItem
+              key={item.rating}
+              value={item.rating}
+              onClick={() => setRating(item.rating)}
+            >
+              {item.rating}
+            </MenuItem>
+          ))}
+        </TextField>
       </Box>
       <Typography variant="h5">Items</Typography>
       <Box className="AddOrder__Col">
@@ -167,11 +182,27 @@ function AddOrder() {
               sx={{ marginLeft: "1rem" }}
               onChange={(e) => dishNameHandler(item.id, e)}
             />
-            <TextField
+            {/* <TextField
               label="Rating"
               sx={{ marginLeft: "1rem" }}
               onChange={(e) => ratingHandler(item.id, e)}
-            />
+            /> */}
+            <TextField
+              className="AddOrder__Row__Ele"
+              sx={{ ml: "1rem", minWidth: "10rem" }}
+              select
+              label="Rating"
+            >
+              {ratingData.map((rating) => (
+                <MenuItem
+                  key={rating.rating}
+                  value={rating.rating}
+                  onClick={(e) => ratingHandler(item.id, rating.rating)}
+                >
+                  {rating.rating}
+                </MenuItem>
+              ))}
+            </TextField>
           </Box>
         ))}
       </Box>
