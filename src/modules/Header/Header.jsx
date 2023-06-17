@@ -15,7 +15,12 @@ function Header(props) {
         </Container>
       </Box>
 
-      {isNotMobile ? <NavBar /> : null}
+      {isNotMobile ? (
+        <NavBar
+          userDetails={props.userDetails}
+          setUserDetails={props.setUserDetails}
+        />
+      ) : null}
     </Box>
   );
 }

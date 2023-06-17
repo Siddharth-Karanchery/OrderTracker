@@ -11,8 +11,8 @@ export const NavTabs = [
     tabName: "Insights",
     path: "/insights",
   },
-  {
-    tabName: "Login",
-    path: "/login",
-  },
+  // {
+  //   tabName: "Login",
+  //   path: "/login",
+  // },
 ];
