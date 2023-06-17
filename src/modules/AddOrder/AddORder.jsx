@@ -4,14 +4,16 @@ import {
   Typography,
   TextField,
   InputAdornment,
+  MenuItem,
 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import AddIcon from "@mui/icons-material/Add";
-
+import axios from "axios";
 import "./AddOrder.css";
 import React from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
+import { foodCategories } from "../../data/foodCategory";
 
 function AddOrder() {
   const [orderItems, setOrderItems] = React.useState([
@@ -26,6 +28,7 @@ function AddOrder() {
   const [amount, setAmount] = React.useState("");
   const [date, setDate] = React.useState("");
   const [rating, setRating] = React.useState("");
+  const [category, setCategory] = React.useState("");
 
   const navigate = useNavigate();
 
@@ -52,6 +55,7 @@ function AddOrder() {
     setAmount("");
     setDate("");
     setRating("");
+    setCategory("");
   };
 
   const cancelHandler = () => {
@@ -64,9 +68,21 @@ function AddOrder() {
     orderDetails.Date = date;
     orderDetails.Amount = amount;
     orderDetails.Rating = rating;
+    orderDetails.Category = category;
     orderDetails.Order = orderItems;
     console.log("orderDetails: ", orderDetails);
-    resetForm();
+    axios
+      .post(
+        `https://ordertracker-42ee4-default-rtdb.asia-southeast1.firebasedatabase.app/data/.json?auth=${process.env.REACT_APP_DBSECRET}`,
+        orderDetails
+      )
+      .then(function (response) {
+        alert("Data added successfully!");
+        resetForm();
+      })
+      .catch(function (error) {
+        alert("Something went wrong! Please try again.");
+      });
   };
 
   const dishNameHandler = (id, e) => {
@@ -100,6 +116,24 @@ function AddOrder() {
           onChange={(e) => setBranch(e.target.value)}
           value={branch}
         />
+        <TextField
+          className="AddOrder__Row__Ele"
+          sx={{ mr: "1rem", minWidth: "10rem" }}
+          select
+          label="Category"
+
+          // helperText="Please select your currency"
+        >
+          {foodCategories.map((category) => (
+            <MenuItem
+              key={category.label}
+              value={category.label}
+              onClick={() => setCategory(category.label)}
+            >
+              {category.label}
+            </MenuItem>
+          ))}
+        </TextField>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Order Date"
@@ -109,7 +143,7 @@ function AddOrder() {
         </LocalizationProvider>
         <TextField
           className="AddOrder__Row__Ele"
-          sx={{ margin: "0 1rem" }}
+          sx={{ ml: "1rem" }}
           label="Bill Amount"
           onChange={(e) => setAmount(e.target.value)}
           InputProps={{
@@ -130,13 +164,11 @@ function AddOrder() {
           <Box className="AddOrder__Row mY" id={item.id}>
             <TextField
               label="Dish Name"
-              value={item.dishname}
               sx={{ marginLeft: "1rem" }}
               onChange={(e) => dishNameHandler(item.id, e)}
             />
             <TextField
               label="Rating"
-              value={item.rating}
               sx={{ marginLeft: "1rem" }}
               onChange={(e) => ratingHandler(item.id, e)}
             />
