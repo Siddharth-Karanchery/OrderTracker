@@ -12,9 +12,11 @@ import React from "react";
 import AddOrder from "./modules/AddOrder/AddORder";
 import Insights from "./modules/Insights/Insights";
 import Login from "./modules/Login/Login";
+import RouteGuard from "./modules/RouteGuard/RouteGuard";
 
 function OrderTracker() {
   const [showMenu, setShowMenu] = React.useState(false);
+  const [userDetails, setUserDetails] = React.useState();
 
   const isNotMobile = useMediaQuery("(min-width:450px)");
 
@@ -28,10 +30,18 @@ function OrderTracker() {
         <Header isNotMobile={isNotMobile} onMenuSelect={onMenuSelect} />
         <Box className="OrderTracker__Page">
           <Routes>
-            <Route exact path="/AddOrder" element={<AddOrder />} />
+            <Route
+              exact
+              path="/AddOrder"
+              element={<RouteGuard userDetails={userDetails} />}
+            />
             <Route exact path="/" element={<Home />} />
             <Route exact path="/insights" element={<Insights />} />
-            <Route exact path="/login" element={<Login />} />
+            <Route
+              exact
+              path="/login"
+              element={<Login setUserDetails={setUserDetails} />}
+            />
           </Routes>
         </Box>
         <Footer />

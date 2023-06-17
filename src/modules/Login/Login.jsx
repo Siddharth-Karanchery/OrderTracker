@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 
-import Link from "@mui/material/Link";
+import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -12,11 +12,30 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme } from "@mui/material/styles";
 
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+// Initialize Firebase
+const app = initializeApp({
+  apiKey: process.env.REACT_APP_FB_APIKEY,
+  authDomain: process.env.REACT_APP_FB_AUTHDOMAIN,
+  databaseURL: process.env.REACT_APP_FB_DATABASEURL,
+  projectId: process.env.REACT_APP_FB_PROJECTID,
+  storageBucket: process.env.REACT_APP_FB_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_FB_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_FB_APPID,
+  measurementId: process.env.REACT_APP_FB_MEASUREMENTID,
+});
+
+// Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth(app);
+
+export default function SignIn(props) {
+  let navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -24,6 +43,34 @@ export default function SignIn() {
       email: data.get("email"),
       password: data.get("password"),
     });
+    signInWithEmailAndPassword(auth, data.get("email"), data.get("password"))
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        props.setUserDetails(user);
+        console.log("user: ", user);
+        // setLoginError({
+        //   state: false,
+        // });
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+
+        // if (errorCode === "auth/wrong-password") {
+        //   setLoginError({
+        //     state: true,
+        //     errorCode: errorCode,
+        //     errorMessage: "Invalid Password!",
+        //   });
+        // } else if (errorCode === "auth/user-not-found") {
+        //   setLoginError({
+        //     state: true.valueOf,
+        //     errorCode: errorCode,
+        //     errorMessage: "User not found!",
+        //   });
+        // }
+      });
   };
 
   return (
