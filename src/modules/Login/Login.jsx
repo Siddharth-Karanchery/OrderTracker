@@ -47,7 +47,7 @@ export default function SignIn(props) {
       </FormHelperText>
     );
   };
-  console.log("test");
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
