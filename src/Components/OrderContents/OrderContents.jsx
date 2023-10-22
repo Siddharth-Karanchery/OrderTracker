@@ -1,12 +1,27 @@
 import React, { Component } from "react";
 
 import {
+  Box,
   Container,
   Accordion,
   AccordionSummary,
   Typography,
   AccordionDetails,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from "@mui/material";
+// import Table from '@mui/material/Table';
+// import TableBody from '@mui/material/TableBody';
+// import TableCell from '@mui/material/TableCell';
+// import TableContainer from '@mui/material/TableContainer';
+// import TableHead from '@mui/material/TableHead';
+// import TableRow from '@mui/material/TableRow';
+// import Paper from '@mui/material/Paper'
 import StarIcon from "@mui/icons-material/Star";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -69,7 +84,7 @@ function OrderContents(props) {
       </AccordionSummary>
       <AccordionDetails>
         <Container className="OrderContents__OrderAcc__Detail">
-          {props.order.Order.map((item) => {
+          {/* {props.order.Order.map((item) => {
             return (
               <Container className="OrderContents__OrderAcc__Detail__Ele">
                 <Typography
@@ -94,7 +109,61 @@ function OrderContents(props) {
                 </Typography>
               </Container>
             );
-          })}
+          })} */}
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left" style={{ fontWeight: "bold" }}>
+                    Dish Name
+                  </TableCell>
+                  <TableCell align="center" style={{ fontWeight: "bold" }}>
+                    Rating
+                  </TableCell>
+                  <TableCell align="center" style={{ fontWeight: "bold" }}>
+                    Tags
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {props.order.Order.map((row) => (
+                  <TableRow
+                    key={row.dishname}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row" align="left">
+                      {row.dishname}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <StarIcon
+                          fontSize="small"
+                          sx={{
+                            color: ratingColorHandler(row.rating),
+                          }}
+                        />
+                        <b style={{ color: ratingColorHandler(row.rating) }}>
+                          {row.rating}
+                        </b>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center">
+                      {/* {row.tags.map((tag) => {
+                        return <b>{tag}</b>;
+                      })} */}
+                      test
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Container>
       </AccordionDetails>
     </Accordion>

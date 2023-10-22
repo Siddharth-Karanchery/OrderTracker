@@ -5,14 +5,14 @@ import { foodCategories } from "../../data/foodCategory";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
-function SearchPanel(props) {
+function FilterPanel(props) {
   const [hotelName, setHotelName] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [fromDate, setFromDate] = React.useState();
   const [toDate, setToDate] = React.useState();
 
   return (
-    <Container className="Home__Searchpanel">
+    <Container className="Home__FilterPanel">
       <TextField
         label="Hotel Name"
         onChange={(e) => setHotelName(e.target.value)}
@@ -61,10 +61,10 @@ function SearchPanel(props) {
           },
         }}
       >
-        Search
+        Filter
       </Button>
     </Container>
   );
 }
 
-export default SearchPanel;
+export default FilterPanel;

@@ -16,6 +16,24 @@ import { useNavigate, createSearchParams } from "react-router-dom";
 import { foodCategories } from "../../data/foodCategory";
 import { ratingData } from "../../data/DropDownData";
 
+import OutlinedInput from "@mui/material/OutlinedInput";
+
+import ListItemText from "@mui/material/ListItemText";
+import Select from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
+import { itemTags, itemTags1 } from "../../data/itemTags";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 function AddOrder() {
   const [orderItems, setOrderItems] = React.useState([
     {
@@ -62,6 +80,7 @@ function AddOrder() {
   const cancelHandler = () => {
     navigate("/");
   };
+
   const submitHandler = () => {
     let orderDetails = {};
     orderDetails.HotelName = hotelName;
@@ -72,18 +91,18 @@ function AddOrder() {
     orderDetails.Category = category;
     orderDetails.Order = orderItems;
     console.log("orderDetails: ", orderDetails);
-    axios
-      .post(
-        `https://ordertracker-42ee4-default-rtdb.asia-southeast1.firebasedatabase.app/data/.json?auth=${process.env.REACT_APP_DBSECRET}`,
-        orderDetails
-      )
-      .then(function (response) {
-        alert("Data added successfully!");
-        resetForm();
-      })
-      .catch(function (error) {
-        alert("Something went wrong! Please try again.");
-      });
+    // axios
+    //   .post(
+    //     `https://ordertracker-42ee4-default-rtdb.asia-southeast1.firebasedatabase.app/data/.json?auth=${process.env.REACT_APP_DBSECRET}`,
+    //     orderDetails
+    //   )
+    //   .then(function (response) {
+    //     alert("Data added successfully!");
+    //     resetForm();
+    //   })
+    //   .catch(function (error) {
+    //     alert("Something went wrong! Please try again.");
+    //   });
   };
 
   const dishNameHandler = (id, e) => {
@@ -150,12 +169,7 @@ function AddOrder() {
           }}
           value={amount}
         />
-        {/* <TextField
-          sx={{ margin: "0 1rem" }}
-          label="Rating"
-          onChange={(e) => setRating(e.target.value)}
-          value={rating}
-        /> */}
+
         <TextField
           className="AddOrder__Row__Ele"
           sx={{ ml: "1rem", minWidth: "10rem" }}
@@ -182,11 +196,6 @@ function AddOrder() {
               sx={{ marginLeft: "1rem" }}
               onChange={(e) => dishNameHandler(item.id, e)}
             />
-            {/* <TextField
-              label="Rating"
-              sx={{ marginLeft: "1rem" }}
-              onChange={(e) => ratingHandler(item.id, e)}
-            /> */}
             <TextField
               className="AddOrder__Row__Ele"
               sx={{ ml: "1rem", minWidth: "10rem" }}

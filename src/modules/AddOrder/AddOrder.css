@@ -33,3 +33,7 @@
 .mY {
   margin: 0.5rem 0;
 }
+.AddOrder__Row__Select {
+  min-width: 35rem;
+  margin-left: 1rem;
+}
