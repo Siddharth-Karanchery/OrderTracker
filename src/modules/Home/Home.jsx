@@ -20,7 +20,7 @@ import { foodCategories } from "../../data/foodCategory";
 import moment from "moment/moment";
 import { display } from "@mui/system";
 import OrderContents from "../../Components/OrderContents/OrderContents";
-import SearchPanel from "../../Components/SearchPanel/SearchPanel";
+import FilterPanel from "../../Components/FilterPanel/FilterPanel";
 
 function Home() {
   const [hotelName, setHotelName] = React.useState("");
@@ -77,7 +77,7 @@ function Home() {
   });
   return (
     <Box className="Home">
-      <SearchPanel />
+      <FilterPanel />
       <Container className="Home__row">{orderContent}</Container>
     </Box>
   );

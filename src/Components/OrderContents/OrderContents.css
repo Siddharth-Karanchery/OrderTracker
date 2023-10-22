@@ -1,3 +1,6 @@
+.OrderContents__TableHeaderText {
+  font-weight: bold;
+}
 .OrderContents__OrderAcc__Summary {
   display: flex;
   flex-direction: row;
