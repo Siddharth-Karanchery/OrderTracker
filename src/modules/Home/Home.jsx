@@ -40,29 +40,13 @@ function Home() {
       )
       .then((response) => {
         const tempInputData = Object.values(response.data.data);
-        console.log("tempInputData: ", tempInputData);
+
         setOrderData(tempInputData);
       });
   }, []);
 
   const handleChange = (element) => (isExpanded) => {
     setExpanded(isExpanded ? element : false);
-  };
-
-  const ratingColorHandler = (rating) => {
-    let color = "";
-    if (rating > 4) {
-      color = "#006d77";
-    } else if (rating <= 4 && rating > 3.5) {
-      color = "#2a9d8f";
-    } else if (rating <= 3.5 && rating > 2.5) {
-      color = "#f4a261";
-    } else if (rating <= 2.5) {
-      color = "#e76f51";
-    } else {
-      color = "#000000";
-    }
-    return color;
   };
 
   let orderContent = filteredData.map((order, i) => {

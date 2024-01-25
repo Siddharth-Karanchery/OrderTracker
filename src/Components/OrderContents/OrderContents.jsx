@@ -14,14 +14,8 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Chip,
 } from "@mui/material";
-// import Table from '@mui/material/Table';
-// import TableBody from '@mui/material/TableBody';
-// import TableCell from '@mui/material/TableCell';
-// import TableContainer from '@mui/material/TableContainer';
-// import TableHead from '@mui/material/TableHead';
-// import TableRow from '@mui/material/TableRow';
-// import Paper from '@mui/material/Paper'
 import StarIcon from "@mui/icons-material/Star";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -154,10 +148,10 @@ function OrderContents(props) {
                       </Box>
                     </TableCell>
                     <TableCell align="center">
-                      {/* {row.tags.map((tag) => {
-                        return <b>{tag}</b>;
-                      })} */}
-                      test
+                      {row.tags &&
+                        row.tags.map((tag) => {
+                          return <Chip label={tag} sx={{ margin: "0 5px" }} />;
+                        })}
                     </TableCell>
                   </TableRow>
                 ))}

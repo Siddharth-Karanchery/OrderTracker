@@ -18,12 +18,7 @@ function FilterPanel(props) {
         onChange={(e) => setHotelName(e.target.value)}
         value={hotelName}
       />
-      <TextField
-        className="AddOrder__Row__Ele"
-        sx={{ mx: "1rem", minWidth: "10rem" }}
-        select
-        label="Category"
-      >
+      <TextField sx={{ mx: "1rem", minWidth: "10rem" }} select label="Category">
         {foodCategories.map((category) => (
           <MenuItem
             key={category.label}
@@ -49,8 +44,6 @@ function FilterPanel(props) {
       </LocalizationProvider>
       <Button
         variant="contained"
-        className="AddOrder__AddItem"
-        //   onClick={submitHandler}
         sx={{
           color: "#fefefe",
           backgroundColor: "#bf4342",

@@ -26,17 +26,8 @@ function Insights() {
     <Box className="Insights">
       <Container className="Insights__Searchpanel">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            label="From"
-            // onChange={(e) => setDate(e.$d)}
-            // value={date}
-          />
-          <DatePicker
-            sx={{ marginLeft: "1rem" }}
-            label="To"
-            // onChange={(e) => setDate(e.$d)}
-            // value={date}
-          />
+          <DatePicker label="From" />
+          <DatePicker sx={{ marginLeft: "1rem" }} label="To" />
         </LocalizationProvider>
         <Button
           variant="contained"
