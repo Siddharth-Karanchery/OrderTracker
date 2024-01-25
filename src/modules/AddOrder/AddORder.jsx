@@ -5,6 +5,10 @@ import {
   TextField,
   InputAdornment,
   MenuItem,
+  Select,
+  Checkbox,
+  OutlinedInput,
+  ListItemText,
 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -12,9 +16,21 @@ import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 import "./AddOrder.css";
 import React from "react";
-import { useNavigate, createSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { foodCategories } from "../../data/foodCategory";
 import { ratingData } from "../../data/DropDownData";
+import { tagsData } from "../../data/tagsData";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 function AddOrder() {
   const [orderItems, setOrderItems] = React.useState([
@@ -22,6 +38,7 @@ function AddOrder() {
       id: 0,
       dishname: "",
       rating: "",
+      tags: [],
     },
   ]);
   const [hotelName, setHotelName] = React.useState("");
@@ -39,6 +56,7 @@ function AddOrder() {
       id: orderItems.length,
       dishname: "",
       rating: "",
+      tags: [],
     });
     setOrderItems(temp);
   };
@@ -49,6 +67,7 @@ function AddOrder() {
         id: 0,
         dishname: "",
         rating: "",
+        tags: [],
       },
     ]);
     setHotelName("");
@@ -71,7 +90,7 @@ function AddOrder() {
     orderDetails.Rating = rating;
     orderDetails.Category = category;
     orderDetails.Order = orderItems;
-    console.log("orderDetails: ", orderDetails);
+
     axios
       .post(
         `https://ordertracker-42ee4-default-rtdb.asia-southeast1.firebasedatabase.app/data/.json?auth=${process.env.REACT_APP_DBSECRET}`,
@@ -100,6 +119,20 @@ function AddOrder() {
     let selectedOrder = orderItems[selectedIndex];
     selectedOrder.rating = rating;
     temp[selectedIndex] = selectedOrder;
+  };
+
+  const handleChange = (id, event) => {
+    const {
+      target: { value },
+    } = event;
+
+    let temp = orderItems.slice();
+    const selectedIndex = orderItems.findIndex((obj) => obj.id === id);
+    let selectedOrder = orderItems[selectedIndex];
+    selectedOrder.tags.push(value[0]);
+    temp[selectedIndex] = selectedOrder;
+
+    setOrderItems(temp);
   };
 
   return (
@@ -150,12 +183,7 @@ function AddOrder() {
           }}
           value={amount}
         />
-        {/* <TextField
-          sx={{ margin: "0 1rem" }}
-          label="Rating"
-          onChange={(e) => setRating(e.target.value)}
-          value={rating}
-        /> */}
+
         <TextField
           className="AddOrder__Row__Ele"
           sx={{ ml: "1rem", minWidth: "10rem" }}
@@ -182,11 +210,7 @@ function AddOrder() {
               sx={{ marginLeft: "1rem" }}
               onChange={(e) => dishNameHandler(item.id, e)}
             />
-            {/* <TextField
-              label="Rating"
-              sx={{ marginLeft: "1rem" }}
-              onChange={(e) => ratingHandler(item.id, e)}
-            /> */}
+
             <TextField
               className="AddOrder__Row__Ele"
               sx={{ ml: "1rem", minWidth: "10rem" }}
@@ -203,6 +227,27 @@ function AddOrder() {
                 </MenuItem>
               ))}
             </TextField>
+            <Select
+              className="AddOrder__Row__Ele"
+              style={{ width: "15rem" }}
+              multiple
+              value={orderItems.tags ? orderItems.tags : []}
+              onChange={(e) => handleChange(item.id, e)}
+              input={<OutlinedInput label="Tags" placeholder="Tags" />}
+              renderValue={(selected) => selected.join(", ")}
+              MenuProps={MenuProps}
+            >
+              {tagsData.map((tag) => (
+                <MenuItem key={tag} value={tag}>
+                  <Checkbox
+                    checked={
+                      orderItems.tags && orderItems.tags.indexOf(tag) > -1
+                    }
+                  />
+                  <ListItemText primary={tag} />
+                </MenuItem>
+              ))}
+            </Select>
           </Box>
         ))}
       </Box>
