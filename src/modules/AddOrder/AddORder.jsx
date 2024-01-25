@@ -32,24 +32,6 @@ const MenuProps = {
   },
 };
 
-import OutlinedInput from "@mui/material/OutlinedInput";
-
-import ListItemText from "@mui/material/ListItemText";
-import Select from "@mui/material/Select";
-import Checkbox from "@mui/material/Checkbox";
-import { itemTags, itemTags1 } from "../../data/itemTags";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
 function AddOrder() {
   const [orderItems, setOrderItems] = React.useState([
     {
@@ -109,7 +91,6 @@ function AddOrder() {
     orderDetails.Rating = rating;
     orderDetails.Category = category;
     orderDetails.Order = orderItems;
-<<<<<<< HEAD
 
     axios
       .post(
@@ -123,21 +104,6 @@ function AddOrder() {
       .catch(function (error) {
         alert("Something went wrong! Please try again.");
       });
-=======
-    console.log("orderDetails: ", orderDetails);
-    // axios
-    //   .post(
-    //     `https://ordertracker-42ee4-default-rtdb.asia-southeast1.firebasedatabase.app/data/.json?auth=${process.env.REACT_APP_DBSECRET}`,
-    //     orderDetails
-    //   )
-    //   .then(function (response) {
-    //     alert("Data added successfully!");
-    //     resetForm();
-    //   })
-    //   .catch(function (error) {
-    //     alert("Something went wrong! Please try again.");
-    //   });
->>>>>>> 1d0bb7ed3f035ee36bf002beefe6b4014d305a81
   };
 
   const dishNameHandler = (id, e) => {
@@ -245,10 +211,6 @@ function AddOrder() {
               sx={{ marginLeft: "1rem" }}
               onChange={(e) => dishNameHandler(item.id, e)}
             />
-<<<<<<< HEAD
-
-=======
->>>>>>> 1d0bb7ed3f035ee36bf002beefe6b4014d305a81
             <TextField
               className="AddOrder__Row__Ele"
               sx={{ ml: "1rem", minWidth: "10rem" }}
