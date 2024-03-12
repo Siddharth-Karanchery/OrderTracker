@@ -1,18 +1,18 @@
 import "./OrderTracker.css";
 
 import Footer from "./modules/Footer/Footer";
-import Header from "./modules/Header/Header";
+
 import Home from "./modules/Home/Home";
 
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
 import AddOrder from "./modules/AddOrder/AddORder";
 import Insights from "./modules/Insights/Insights";
 import Login from "./modules/Login/Login";
 import RouteGuard from "./modules/RouteGuard/RouteGuard";
+import NoMatch from "./modules/NoMatch/NoMatch";
 
 function OrderTracker() {
   const [userDetails, setUserDetails] = React.useState();
@@ -53,6 +53,11 @@ function OrderTracker() {
               exact
               path="/"
               element={<Login setUserDetails={setUserDetails} />}
+            />
+            <Route
+              exact
+              path="*"
+              element={<NoMatch userDetails={userDetails} />}
             />
           </Routes>
         </Box>
