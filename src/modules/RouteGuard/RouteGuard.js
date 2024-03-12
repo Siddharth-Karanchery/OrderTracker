@@ -18,7 +18,7 @@ const RouteGuard = (props) => {
     return flag;
   }
 
-  return <>{hasJWT() ? <AddOrder /> : <Navigate to="/login" />}</>;
+  return <>{hasJWT() ? props.component : <Navigate to="/login" />}</>;
 };
 
 export default RouteGuard;

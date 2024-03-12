@@ -38,10 +38,31 @@ function OrderTracker() {
             <Route
               exact
               path="/AddOrder"
-              element={<RouteGuard userDetails={userDetails} />}
+              element={
+                <RouteGuard
+                  userDetails={userDetails}
+                  component={<AddOrder />}
+                />
+              }
             />
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/insights" element={<Insights />} />
+
+            <Route
+              exact
+              path="/"
+              element={
+                <RouteGuard userDetails={userDetails} component={<Home />} />
+              }
+            />
+            <Route
+              exact
+              path="/insights"
+              element={
+                <RouteGuard
+                  userDetails={userDetails}
+                  component={<Insights />}
+                />
+              }
+            />
             <Route
               exact
               path="/login"
