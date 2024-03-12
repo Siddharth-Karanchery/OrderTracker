@@ -1,23 +1,17 @@
 import * as React from "react";
+import "./Login.css";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-
-import { useNavigate } from "react-router-dom";
-
-import Box from "@mui/material/Box";
+import { TextField, Box, Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme } from "@mui/material/styles";
 import FormHelperText from "@mui/material/FormHelperText";
 import { red } from "@mui/material/colors";
 
+import { useNavigate } from "react-router-dom";
+
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
-const defaultTheme = createTheme();
 
 // Initialize Firebase
 const app = initializeApp({
@@ -56,7 +50,7 @@ export default function SignIn(props) {
         // Signed in
         const user = userCredential.user;
         props.setUserDetails(user);
-        navigate("/");
+        navigate("/home");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -78,18 +72,8 @@ export default function SignIn(props) {
   };
 
   return (
-    <Container className="Login" component="main" maxWidth="xs">
-      <CssBaseline />
-
-      <Box
-        className="Login"
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+    <Box className="Login">
+      <Box className="Login__Form">
         <Avatar sx={{ m: 1, bgcolor: "#8c1c13" }}>
           <LockOutlinedIcon />
         </Avatar>
@@ -140,6 +124,6 @@ export default function SignIn(props) {
           </Button>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 }

@@ -15,24 +15,11 @@ import Login from "./modules/Login/Login";
 import RouteGuard from "./modules/RouteGuard/RouteGuard";
 
 function OrderTracker() {
-  const [showMenu, setShowMenu] = React.useState(false);
   const [userDetails, setUserDetails] = React.useState();
-
-  const isNotMobile = useMediaQuery("(min-width:450px)");
-
-  const onMenuSelect = () => {
-    setShowMenu((prev) => !prev);
-  };
 
   return (
     <Box className="OrderTracker">
       <BrowserRouter>
-        <Header
-          isNotMobile={isNotMobile}
-          onMenuSelect={onMenuSelect}
-          userDetails={userDetails}
-          setUserDetails={setUserDetails}
-        />
         <Box className="OrderTracker__Page">
           <Routes>
             <Route
@@ -45,10 +32,9 @@ function OrderTracker() {
                 />
               }
             />
-
             <Route
               exact
-              path="/"
+              path="/home"
               element={
                 <RouteGuard userDetails={userDetails} component={<Home />} />
               }
@@ -65,7 +51,7 @@ function OrderTracker() {
             />
             <Route
               exact
-              path="/login"
+              path="/"
               element={<Login setUserDetails={setUserDetails} />}
             />
           </Routes>
