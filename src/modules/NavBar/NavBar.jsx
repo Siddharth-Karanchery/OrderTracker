@@ -50,39 +50,25 @@ function NavBar(props) {
             {tab.tabName}
           </Typography>
         ))}
-        {isLoggedIn ? (
-          <Typography
-            className="Navbar__Tab"
-            variant="subtitle1"
-            sx={{ cursor: "pointer", margin: "0 1rem" }}
-            onClick={() => {
-              signOut(auth)
-                .then(() => {
-                  props.setUserDetails({});
-                  alert("Logged Out successfully!");
-                  navigate("/login");
-                })
-                .catch((error) => {
-                  alert("Something went wrong!");
-                });
-            }}
-          >
-            Logout
-          </Typography>
-        ) : (
-          <Typography
-            className="Navbar__Tab"
-            variant="subtitle1"
-            sx={{ cursor: "pointer", margin: "0 1rem" }}
-            onClick={() => {
-              navigate({
-                pathname: "/login",
+
+        <Typography
+          className="Navbar__Tab"
+          variant="subtitle1"
+          sx={{ cursor: "pointer", margin: "0 1rem" }}
+          onClick={() => {
+            signOut(auth)
+              .then(() => {
+                props.setUserDetails({});
+                alert("Logged Out successfully!");
+                navigate("/login");
+              })
+              .catch((error) => {
+                alert("Something went wrong!");
               });
-            }}
-          >
-            Login
-          </Typography>
-        )}
+          }}
+        >
+          Logout
+        </Typography>
       </Box>
     </>
   );

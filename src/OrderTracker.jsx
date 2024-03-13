@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import React from "react";
 import AddOrder from "./modules/AddOrder/AddORder";
+import Dashboard from "./modules/Dashboard/Dashboard";
 import Insights from "./modules/Insights/Insights";
 import Login from "./modules/Login/Login";
 import RouteGuard from "./modules/RouteGuard/RouteGuard";
@@ -24,31 +25,16 @@ function OrderTracker() {
           <Routes>
             <Route
               exact
-              path="/AddOrder"
-              element={
-                <RouteGuard
-                  userDetails={userDetails}
-                  component={<AddOrder />}
-                />
-              }
-            />
-            <Route
-              exact
               path="/home"
               element={
                 <RouteGuard userDetails={userDetails} component={<Home />} />
               }
-            />
-            <Route
-              exact
-              path="/insights"
-              element={
-                <RouteGuard
-                  userDetails={userDetails}
-                  component={<Insights />}
-                />
-              }
-            />
+            >
+              <Route path="" element={<Dashboard />} />
+              <Route path="/home/AddOrder" element={<AddOrder />} />
+              <Route path="/home/insights" element={<Insights />} />
+            </Route>
+
             <Route
               exact
               path="/"

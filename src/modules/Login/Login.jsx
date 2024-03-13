@@ -50,7 +50,7 @@ export default function SignIn(props) {
         // Signed in
         const user = userCredential.user;
         props.setUserDetails(user);
-        navigate("/home");
+        navigate("/home/");
       })
       .catch((error) => {
         const errorCode = error.code;
