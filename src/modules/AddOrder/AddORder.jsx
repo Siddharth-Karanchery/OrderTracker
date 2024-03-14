@@ -9,6 +9,7 @@ import {
   Checkbox,
   OutlinedInput,
   ListItemText,
+  Chip,
 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -49,6 +50,9 @@ function AddOrder(props) {
   const [category, setCategory] = React.useState("");
 
   const navigate = useNavigate();
+  React.useEffect(() => {
+    console.log("orderItems.tags: ", orderItems[0].tags);
+  });
 
   const addItemHandler = (props) => {
     let temp = orderItems.slice();
@@ -131,7 +135,7 @@ function AddOrder(props) {
     let temp = orderItems.slice();
     const selectedIndex = orderItems.findIndex((obj) => obj.id === id);
     let selectedOrder = orderItems[selectedIndex];
-    selectedOrder.tags.push(value[0]);
+    selectedOrder.tags = typeof value === "string" ? value.split(",") : value;
     temp[selectedIndex] = selectedOrder;
 
     setOrderItems(temp);
@@ -228,14 +232,22 @@ function AddOrder(props) {
                 </MenuItem>
               ))}
             </TextField>
+
             <Select
-              className="AddOrder__Row__Ele"
-              style={{ width: "15rem" }}
+              labelId="demo-multiple-chip-label"
+              id="demo-multiple-chip"
+              style={{ width: "28rem", marginLeft: "10px" }}
               multiple
-              value={orderItems.tags ? orderItems.tags : []}
+              value={item.tags}
               onChange={(e) => handleChange(item.id, e)}
-              input={<OutlinedInput label="Tags" placeholder="Tags" />}
-              renderValue={(selected) => selected.join(", ")}
+              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
               MenuProps={MenuProps}
             >
               {tagsData.map((tag) => (
@@ -269,7 +281,7 @@ function AddOrder(props) {
           sx={{ color: "#a78a7f", borderColor: "#a78a7f", marginTop: "1rem" }}
         >
           Cancel
-        </Button>{" "}
+        </Button>
         <Button
           variant="outlined"
           className="AddOrder__AddItem"
