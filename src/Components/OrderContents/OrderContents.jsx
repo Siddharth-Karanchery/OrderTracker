@@ -108,13 +108,22 @@ function OrderContents(props) {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="left" style={{ fontWeight: "bold" }}>
+                  <TableCell
+                    align="left"
+                    style={{ fontWeight: "bold", width: "30%" }}
+                  >
                     Dish Name
                   </TableCell>
-                  <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  <TableCell
+                    align="center"
+                    style={{ fontWeight: "bold", width: "20%" }}
+                  >
                     Rating
                   </TableCell>
-                  <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  <TableCell
+                    align="center"
+                    style={{ fontWeight: "bold", width: "50%" }}
+                  >
                     Tags
                   </TableCell>
                 </TableRow>
@@ -147,7 +156,10 @@ function OrderContents(props) {
                         </b>
                       </Box>
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell
+                      align="center"
+                      sx={{ display: "flex", flexWrap: "wrap" }}
+                    >
                       {row.tags &&
                         row.tags.map((tag) => {
                           return <Chip label={tag} sx={{ margin: "0 5px" }} />;
