@@ -6,7 +6,7 @@ import { Box, Container } from "@mui/material";
 import OrderContents from "../../Components/OrderContents/OrderContents";
 import FilterPanel from "../../Components/FilterPanel/FilterPanel";
 
-function Dashboard() {
+function Dashboard(props) {
   const [orderData, setOrderData] = React.useState([]);
 
   const [expanded, setExpanded] = React.useState(false);
@@ -19,8 +19,9 @@ function Dashboard() {
         `https://ordertracker-42ee4-default-rtdb.asia-southeast1.firebasedatabase.app/.json?auth=${process.env.REACT_APP_DBSECRET}`
       )
       .then((response) => {
-        const tempInputData = Object.values(response.data.data);
-
+        const tempInputData = Object.values(response.data.data).filter(
+          (row) => row.uid === props.userDetails.uid
+        );
         setOrderData(tempInputData);
       });
   }, []);

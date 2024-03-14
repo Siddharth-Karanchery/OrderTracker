@@ -32,7 +32,7 @@ const MenuProps = {
   },
 };
 
-function AddOrder() {
+function AddOrder(props) {
   const [orderItems, setOrderItems] = React.useState([
     {
       id: 0,
@@ -50,7 +50,7 @@ function AddOrder() {
 
   const navigate = useNavigate();
 
-  const addItemHandler = () => {
+  const addItemHandler = (props) => {
     let temp = orderItems.slice();
     temp.push({
       id: orderItems.length,
@@ -91,6 +91,7 @@ function AddOrder() {
     orderDetails.Rating = rating;
     orderDetails.Category = category;
     orderDetails.Order = orderItems;
+    orderDetails.uid = props.userDetails.uid;
 
     axios
       .post(

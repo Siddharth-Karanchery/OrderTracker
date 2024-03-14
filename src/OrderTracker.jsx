@@ -30,8 +30,14 @@ function OrderTracker() {
                 <RouteGuard userDetails={userDetails} component={<Home />} />
               }
             >
-              <Route path="" element={<Dashboard />} />
-              <Route path="/home/AddOrder" element={<AddOrder />} />
+              <Route
+                path=""
+                element={<Dashboard userDetails={userDetails} />}
+              />
+              <Route
+                path="/home/AddOrder"
+                element={<AddOrder userDetails={userDetails} />}
+              />
               <Route path="/home/insights" element={<Insights />} />
             </Route>
 
