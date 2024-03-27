@@ -50,9 +50,6 @@ function AddOrder(props) {
   const [category, setCategory] = React.useState("");
 
   const navigate = useNavigate();
-  React.useEffect(() => {
-    console.log("orderItems.tags: ", orderItems[0].tags);
-  });
 
   const addItemHandler = (props) => {
     let temp = orderItems.slice();

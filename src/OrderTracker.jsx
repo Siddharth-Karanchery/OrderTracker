@@ -38,7 +38,10 @@ function OrderTracker() {
                 path="/home/AddOrder"
                 element={<AddOrder userDetails={userDetails} />}
               />
-              <Route path="/home/insights" element={<Insights />} />
+              <Route
+                path="/home/insights"
+                element={<Insights userDetails={userDetails} />}
+              />
             </Route>
 
             <Route

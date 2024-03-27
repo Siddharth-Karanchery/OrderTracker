@@ -1,3 +1,6 @@
+import React from "react";
+import axios from "axios";
+
 import { Box, Button, Container, Typography } from "@mui/material";
 import "./Insights.css";
 
@@ -21,7 +24,35 @@ import {
   pieChartData,
 } from "../../data/dummyData";
 
-function Insights() {
+function Insights(props) {
+  const [spendingData, setSpendingData] = React.useState([]);
+  const [orderNumData, setOrderNumData] = React.useState([]);
+  const [cuisineData, setCuisineData] = React.useState([]);
+  const [dateRange, setDateRange] = React.useState();
+
+  React.useEffect(() => {
+    axios
+      .get(
+        `https://ordertracker-42ee4-default-rtdb.asia-southeast1.firebasedatabase.app/.json?auth=${process.env.REACT_APP_DBSECRET}`
+      )
+      .then((response) => {
+        const tempInputData = Object.values(response.data.data).filter(
+          (row) => row.uid === props.userDetails.uid
+        );
+      });
+
+    // console.log("from month:", new Date().getMonth() + 1 - 7);
+    let fromMonth = new Date().getMonth() + 1 - 5;
+    if (fromMonth < 0) {
+      const yearsToSubtract = Math.ceil(Math.abs(fromMonth) / 12);
+      fromMonth += 12 * yearsToSubtract;
+    }
+    setDateRange({
+      fromDate: fromMonth,
+      toDate: new Date().getMonth() + 1,
+    });
+  }, []);
+
   return (
     <Box className="Insights">
       <Container className="Insights__Searchpanel">
