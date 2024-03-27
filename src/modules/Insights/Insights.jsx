@@ -30,6 +30,39 @@ function Insights(props) {
   const [cuisineData, setCuisineData] = React.useState([]);
   const [dateRange, setDateRange] = React.useState();
 
+  const getSpendingData = (tempInputData) => {
+    let tempData = [];
+
+    tempInputData.forEach((order) => {
+      let orderMonth = Number(order.Date.split("T")[0].split("-")[1]);
+
+      if (spendingData.some((item) => item["month"] === orderMonth)) {
+        let monthData = spendingData.find(
+          (item) => item["month"] === orderMonth
+        );
+        monthData.amount = monthData.amount + Number(order.Amount);
+        tempData.push(monthData);
+      } else if (tempData.some((item) => item["month"] === orderMonth)) {
+        let index = tempData.findIndex((item) => item["month"] === orderMonth);
+        let monthData = tempData.find((item) => item["month"] === orderMonth);
+
+        monthData.amount = monthData.amount + Number(order.Amount);
+        tempData[index] = monthData;
+      } else {
+        tempData.push({
+          month: orderMonth,
+          monthName: new Date(Date.UTC(2000, orderMonth - 1, 1)).toLocaleString(
+            "default",
+            { month: "long" }
+          ),
+          amount: Number(order.Amount),
+        });
+      }
+    });
+
+    setSpendingData(tempData);
+  };
+
   React.useEffect(() => {
     axios
       .get(
@@ -39,9 +72,9 @@ function Insights(props) {
         const tempInputData = Object.values(response.data.data).filter(
           (row) => row.uid === props.userDetails.uid
         );
+        getSpendingData(tempInputData);
       });
 
-    // console.log("from month:", new Date().getMonth() + 1 - 7);
     let fromMonth = new Date().getMonth() + 1 - 5;
     if (fromMonth < 0) {
       const yearsToSubtract = Math.ceil(Math.abs(fromMonth) / 12);
