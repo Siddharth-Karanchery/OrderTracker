@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import "./Insights.css";
 
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -17,12 +17,9 @@ import {
   ResponsiveContainer,
   XAxis,
   YAxis,
+  Tooltip,
 } from "recharts";
-import {
-  barChartData,
-  lineChartData,
-  pieChartData,
-} from "../../data/dummyData";
+import { barChartData, pieChartData } from "../../data/dummyData";
 
 function Insights(props) {
   const [spendingData, setSpendingData] = React.useState([]);
@@ -35,13 +32,17 @@ function Insights(props) {
 
     tempInputData.forEach((order) => {
       let orderMonth = Number(order.Date.split("T")[0].split("-")[1]);
+      let orderYear = Number(order.Date.split("T")[0].split("-")[0]);
 
       if (spendingData.some((item) => item["month"] === orderMonth)) {
+        let index = spendingData.findIndex(
+          (item) => item["month"] === orderMonth
+        );
         let monthData = spendingData.find(
           (item) => item["month"] === orderMonth
         );
         monthData.amount = monthData.amount + Number(order.Amount);
-        tempData.push(monthData);
+        tempData[index] = monthData;
       } else if (tempData.some((item) => item["month"] === orderMonth)) {
         let index = tempData.findIndex((item) => item["month"] === orderMonth);
         let monthData = tempData.find((item) => item["month"] === orderMonth);
@@ -51,10 +52,11 @@ function Insights(props) {
       } else {
         tempData.push({
           month: orderMonth,
-          monthName: new Date(Date.UTC(2000, orderMonth - 1, 1)).toLocaleString(
-            "default",
-            { month: "long" }
-          ),
+          monthName:
+            new Date(Date.UTC(2000, orderMonth - 1, 1)).toLocaleString(
+              "default",
+              { month: "long" }
+            ) + ` ${orderYear}`,
           amount: Number(order.Amount),
         });
       }
@@ -115,7 +117,7 @@ function Insights(props) {
           <LineChart
             width={500}
             height={300}
-            data={lineChartData}
+            data={spendingData}
             margin={{
               top: 5,
               right: 30,
@@ -124,12 +126,12 @@ function Insights(props) {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="monthName" />
             <YAxis />
-
+            <Tooltip />
             <Line
               type="monotone"
-              dataKey="pv"
+              dataKey="amount"
               stroke="#8884d8"
               activeDot={{ r: 8 }}
             />
