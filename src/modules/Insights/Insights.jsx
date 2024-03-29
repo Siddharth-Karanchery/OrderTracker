@@ -19,7 +19,7 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
-import { barChartData, pieChartData } from "../../data/dummyData";
+import { pieChartData } from "../../data/dummyData";
 
 function Insights(props) {
   const [spendingData, setSpendingData] = React.useState([]);
@@ -64,7 +64,43 @@ function Insights(props) {
 
     setSpendingData(tempData);
   };
+  const getOrderNumData = (tempInputData) => {
+    let tempData = [];
 
+    tempInputData.forEach((order) => {
+      let orderMonth = Number(order.Date.split("T")[0].split("-")[1]);
+      let orderYear = Number(order.Date.split("T")[0].split("-")[0]);
+
+      if (spendingData.some((item) => item["month"] === orderMonth)) {
+        let index = spendingData.findIndex(
+          (item) => item["month"] === orderMonth
+        );
+        let monthData = spendingData.find(
+          (item) => item["month"] === orderMonth
+        );
+        monthData.count = monthData.count + 1;
+        tempData[index] = monthData;
+      } else if (tempData.some((item) => item["month"] === orderMonth)) {
+        let index = tempData.findIndex((item) => item["month"] === orderMonth);
+        let monthData = tempData.find((item) => item["month"] === orderMonth);
+
+        monthData.count = monthData.count + 1;
+        tempData[index] = monthData;
+      } else {
+        tempData.push({
+          month: orderMonth,
+          monthName:
+            new Date(Date.UTC(2000, orderMonth - 1, 1)).toLocaleString(
+              "default",
+              { month: "long" }
+            ) + ` ${orderYear}`,
+          count: 1,
+        });
+      }
+    });
+
+    setOrderNumData(tempData);
+  };
   React.useEffect(() => {
     axios
       .get(
@@ -75,6 +111,7 @@ function Insights(props) {
           (row) => row.uid === props.userDetails.uid
         );
         getSpendingData(tempInputData);
+        getOrderNumData(tempInputData);
       });
 
     let fromMonth = new Date().getMonth() + 1 - 5;
@@ -140,9 +177,13 @@ function Insights(props) {
       </Container>
       <Container className="Insights__row">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={barChartData}>
-            <Bar dataKey="uv" fill="#8884d8" />
-            <XAxis dataKey="name" />
+          <BarChart data={orderNumData}>
+            <Bar
+              dataKey="count"
+              fill="#8884d8"
+              label={{ fill: "white", fontSize: 20, fontWeight: "bold" }}
+            />
+            <XAxis dataKey="monthName" />
             <YAxis />
           </BarChart>
         </ResponsiveContainer>
