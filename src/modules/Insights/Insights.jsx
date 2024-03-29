@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { Box, Button, Container } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import "./Insights.css";
 
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -150,6 +150,7 @@ function Insights(props) {
         </Button>
       </Container>
       <Container className="Insights__row">
+        <Typography variant="h4">Spending Data</Typography>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             width={500}
@@ -176,6 +177,7 @@ function Insights(props) {
         </ResponsiveContainer>
       </Container>
       <Container className="Insights__row">
+        <Typography variant="h4">Order Count Data</Typography>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={orderNumData}>
             <Bar
@@ -188,8 +190,9 @@ function Insights(props) {
           </BarChart>
         </ResponsiveContainer>
       </Container>
-      <Box className="Insights__halfrow">
-        <ResponsiveContainer width="40%" height="100%">
+      <Container className="Insights__row">
+        <Typography variant="h4">Cuisine Data</Typography>
+        <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               dataKey="value"
@@ -203,21 +206,7 @@ function Insights(props) {
             />
           </PieChart>
         </ResponsiveContainer>
-        <ResponsiveContainer width="40%" height="100%">
-          <PieChart>
-            <Pie
-              dataKey="value"
-              isAnimationActive={false}
-              data={pieChartData}
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              fill="#8884d8"
-              label
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </Box>
+      </Container>
     </Box>
   );
 }
