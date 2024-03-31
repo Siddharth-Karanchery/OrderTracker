@@ -151,7 +151,7 @@ function Insights(props) {
       </Container>
       <Container className="Insights__row">
         <Typography variant="h4">Spending Data</Typography>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="90%">
           <LineChart
             width={500}
             height={300}
@@ -178,7 +178,7 @@ function Insights(props) {
       </Container>
       <Container className="Insights__row">
         <Typography variant="h4">Order Count Data</Typography>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="90%">
           <BarChart data={orderNumData}>
             <Bar
               dataKey="count"
