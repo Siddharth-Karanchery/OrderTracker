@@ -64,6 +64,7 @@ function Insights(props) {
 
     setSpendingData(tempData);
   };
+
   const getOrderNumData = (tempInputData) => {
     let tempData = [];
 
@@ -71,11 +72,11 @@ function Insights(props) {
       let orderMonth = Number(order.Date.split("T")[0].split("-")[1]);
       let orderYear = Number(order.Date.split("T")[0].split("-")[0]);
 
-      if (spendingData.some((item) => item["month"] === orderMonth)) {
-        let index = spendingData.findIndex(
+      if (orderNumData.some((item) => item["month"] === orderMonth)) {
+        let index = orderNumData.findIndex(
           (item) => item["month"] === orderMonth
         );
-        let monthData = spendingData.find(
+        let monthData = orderNumData.find(
           (item) => item["month"] === orderMonth
         );
         monthData.count = monthData.count + 1;
@@ -101,6 +102,45 @@ function Insights(props) {
 
     setOrderNumData(tempData);
   };
+
+  const getCuisineData = (tempInputData) => {
+    let tempData = [];
+
+    tempInputData.forEach((order) => {
+      let orderMonth = Number(order.Date.split("T")[0].split("-")[1]);
+      let orderYear = Number(order.Date.split("T")[0].split("-")[0]);
+
+      if (cuisineData.some((item) => item["month"] === orderMonth)) {
+        let index = cuisineData.findIndex(
+          (item) => item["month"] === orderMonth
+        );
+        let monthData = cuisineData.find(
+          (item) => item["month"] === orderMonth
+        );
+        monthData.count = monthData.count + 1;
+        tempData[index] = monthData;
+      } else if (tempData.some((item) => item["month"] === orderMonth)) {
+        let index = tempData.findIndex((item) => item["month"] === orderMonth);
+        let monthData = tempData.find((item) => item["month"] === orderMonth);
+
+        monthData.count = monthData.count + 1;
+        tempData[index] = monthData;
+      } else {
+        tempData.push({
+          month: orderMonth,
+          monthName:
+            new Date(Date.UTC(2000, orderMonth - 1, 1)).toLocaleString(
+              "default",
+              { month: "long" }
+            ) + ` ${orderYear}`,
+          cuisineCount: 1,
+        });
+      }
+    });
+
+    setCuisineData(tempData);
+  };
+
   React.useEffect(() => {
     axios
       .get(
@@ -112,6 +152,7 @@ function Insights(props) {
         );
         getSpendingData(tempInputData);
         getOrderNumData(tempInputData);
+        getCuisineData(tempInputData);
       });
 
     let fromMonth = new Date().getMonth() + 1 - 5;
@@ -192,20 +233,78 @@ function Insights(props) {
       </Container>
       <Container className="Insights__row">
         <Typography variant="h4">Cuisine Data</Typography>
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              dataKey="value"
-              isAnimationActive={false}
-              data={pieChartData}
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              fill="#8884d8"
-              label
-            />
-          </PieChart>
-        </ResponsiveContainer>
+        <Box className="Insights__halfrow">
+          <ResponsiveContainer width="20%" height="100%">
+            <PieChart>
+              <Pie
+                dataKey="value"
+                isAnimationActive={false}
+                data={pieChartData}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              />
+            </PieChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width="20%" height="100%">
+            <PieChart>
+              <Pie
+                dataKey="value"
+                isAnimationActive={false}
+                data={pieChartData}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              />
+            </PieChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width="20%" height="100%">
+            <PieChart>
+              <Pie
+                dataKey="value"
+                isAnimationActive={false}
+                data={pieChartData}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              />
+            </PieChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width="20%" height="100%">
+            <PieChart>
+              <Pie
+                dataKey="value"
+                isAnimationActive={false}
+                data={pieChartData}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              />
+            </PieChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width="20%" height="100%">
+            <PieChart>
+              <Pie
+                dataKey="value"
+                isAnimationActive={false}
+                data={pieChartData}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </Box>
       </Container>
     </Box>
   );

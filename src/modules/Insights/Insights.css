@@ -22,18 +22,18 @@
   background-color: var(--backgroundLight);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
 .Insights__halfrow {
-  width: 62.5%;
+  width: 100%;
   height: 40vh;
   padding: 1rem 1rem;
   margin: 1rem 0;
-  background-color: var(--backgroundLight);
+
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  margin-left: 21rem;
 }
