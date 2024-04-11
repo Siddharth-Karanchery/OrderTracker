@@ -106,26 +106,48 @@ function Insights(props) {
   const getCuisineData = (tempInputData) => {
     let tempData = [];
 
+    //*########################### MAPPING THROUGH THE DATA ##############################
     tempInputData.forEach((order) => {
+      console.log(
+        "---------------------------------------------------------------------------"
+      );
+      console.log("order: ", order);
       let orderMonth = Number(order.Date.split("T")[0].split("-")[1]);
       let orderYear = Number(order.Date.split("T")[0].split("-")[0]);
 
-      if (cuisineData.some((item) => item["month"] === orderMonth)) {
-        let index = cuisineData.findIndex(
-          (item) => item["month"] === orderMonth
-        );
-        let monthData = cuisineData.find(
-          (item) => item["month"] === orderMonth
-        );
-        monthData.count = monthData.count + 1;
-        tempData[index] = monthData;
-      } else if (tempData.some((item) => item["month"] === orderMonth)) {
+      //!-------------- IF CURRENT MONTH IS FOUND IN TEMP DATA -------------------------
+      if (tempData.some((item) => item["month"] === orderMonth)) {
         let index = tempData.findIndex((item) => item["month"] === orderMonth);
         let monthData = tempData.find((item) => item["month"] === orderMonth);
 
-        monthData.count = monthData.count + 1;
-        tempData[index] = monthData;
-      } else {
+        console.log("index: ", index);
+        console.log("monthData: ", monthData);
+
+        //?---------------- IF CURRENT CATEGORY IS FOUND IN THE CATEGORY DATA --------------
+        if (
+          monthData.categoryData.findIndex(
+            (category) => category["category"] === order.Category
+          )
+        ) {
+          console.log("monthData.categoryData: ", monthData.categoryData);
+          let catIndex = monthData.categoryData.findIndex(
+            (category) => category["category"] === order.Category
+          );
+          let tempCategoryInfo = monthData.categoryData[catIndex];
+          console.log("catIndex: ", catIndex);
+          console.log("tempCategoryInfo: ", tempCategoryInfo);
+        } else {
+          let tempCuisineArr = monthData.categoryData;
+          tempCuisineArr.push({ category: order.Category, count: 1 });
+          tempData[index].categoryData = tempCuisineArr;
+        }
+      }
+      //!-------------- IF CURRENT MONTH ISNT FOUND IN ANY OF THE ABOVE -------------------
+      else {
+        console.log("In else block");
+        let tempCuisineArr = [];
+
+        tempCuisineArr.push({ category: order.Category, count: 1 });
         tempData.push({
           month: orderMonth,
           monthName:
@@ -133,11 +155,11 @@ function Insights(props) {
               "default",
               { month: "long" }
             ) + ` ${orderYear}`,
-          cuisineCount: 1,
+          categoryData: tempCuisineArr,
         });
       }
     });
-
+    console.log("tempData: ", tempData);
     setCuisineData(tempData);
   };
 
