@@ -18,8 +18,8 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  Legend,
 } from "recharts";
-import { pieChartData } from "../../data/dummyData";
 
 function Insights(props) {
   const [spendingData, setSpendingData] = React.useState([]);
@@ -107,29 +107,32 @@ function Insights(props) {
     let tempData = [];
 
     tempInputData.forEach((order) => {
-      if (cuisineData.some((item) => item["cuisine"] === order.Category)) {
+      if (cuisineData.some((item) => item["name"] === order.Category)) {
         let index = cuisineData.findIndex(
-          (item) => item["cuisine"] === order.Category
+          (item) => item["name"] === order.Category
         );
         let categoryData = cuisineData.find(
-          (item) => item["cuisine"] === order.Category
+          (item) => item["name"] === order.Category
         );
         categoryData.count = categoryData.count + 1;
         tempData[index] = categoryData;
-      } else if (tempData.some((item) => item["cuisine"] === order.Category)) {
+      } else if (tempData.some((item) => item["name"] === order.Category)) {
         let index = tempData.findIndex(
-          (item) => item["cuisine"] === order.Category
+          (item) => item["name"] === order.Category
         );
         let categoryData = tempData.find(
-          (item) => item["cuisine"] === order.Category
+          (item) => item["name"] === order.Category
         );
 
         categoryData.count = categoryData.count + 1;
         tempData[index] = categoryData;
       } else {
         tempData.push({
-          cuisine: order.Category,
+          name: order.Category,
           count: 1,
+          fill:
+            "#" +
+            ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0"),
         });
       }
     });
@@ -161,6 +164,15 @@ function Insights(props) {
       toDate: new Date().getMonth() + 1,
     });
   }, []);
+
+  const renderColorfulLegendText = (value: string, entry: any) => {
+    console.log("value: ", value);
+    return (
+      <span style={{ color: "#596579", fontWeight: 500, padding: "10px" }}>
+        {value}
+      </span>
+    );
+  };
 
   return (
     <Box className="Insights">
@@ -230,74 +242,20 @@ function Insights(props) {
       <Container className="Insights__row">
         <Typography variant="h4">Cuisine Data</Typography>
         <Box className="Insights__halfrow">
-          <ResponsiveContainer width="20%" height="100%">
-            <PieChart>
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart width={400} height={400}>
               <Pie
-                dataKey="value"
+                dataKey="count"
                 isAnimationActive={false}
-                data={pieChartData}
+                data={cuisineData}
                 cx="50%"
                 cy="50%"
                 outerRadius={80}
                 fill="#8884d8"
                 label
+                legendType="square"
               />
-            </PieChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="20%" height="100%">
-            <PieChart>
-              <Pie
-                dataKey="value"
-                isAnimationActive={false}
-                data={pieChartData}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                label
-              />
-            </PieChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="20%" height="100%">
-            <PieChart>
-              <Pie
-                dataKey="value"
-                isAnimationActive={false}
-                data={pieChartData}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                label
-              />
-            </PieChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="20%" height="100%">
-            <PieChart>
-              <Pie
-                dataKey="value"
-                isAnimationActive={false}
-                data={pieChartData}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                label
-              />
-            </PieChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="20%" height="100%">
-            <PieChart>
-              <Pie
-                dataKey="value"
-                isAnimationActive={false}
-                data={pieChartData}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                label
-              />
+              <Tooltip />
             </PieChart>
           </ResponsiveContainer>
         </Box>
